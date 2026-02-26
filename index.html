@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>كنيسه العذراء و القديس بولس الرسول _ الحضره الجديده</title>
+<style>
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:#F5F5Dc;
+  color:white;
+  display:flex;
+  justify-content:center;
+  padding:20px;
+}
+.container{
+  max-width:900px;
+  width:100%;
+  background:#8B4513;
+  padding:25px;
+  border-radius:20px;
+}
+h1{text-align:center;color:#ffffff;}
+#chat{
+  max-height:450px;
+  overflow-y:auto;
+  border:1px solid #000000;
+  padding:10px;
+  border-radius:15px;
+  margin-bottom:10px;
+  white-space:pre-line;
+}
+.user-msg{color:#000000;margin:5px 0;}
+.bot-msg{color:#000000;margin:5px 0;}
+input{
+  width:75%;
+  padding:10px;
+  font-size:1rem;
+  border-radius:10px;
+  border:none;
+}
+button{
+  padding:10px;
+  font-size:1rem;
+  border-radius:10px;
+  border:none;
+  background:#ffffff;
+  color:#000;
+  cursor:pointer;
+  margin-left:5px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div style="text-align:center;margin-bottom:15px;">
+<img src="logo.jpg" alt="شعار الكنيسة" style="max-width:120px; border-radius:15px;">
+</div>
+
+<h1>⛪ كنيسه العذراء و القديس بولس الرسول _ الحضره الجديده</h1>
+
+<div id="chat"></div>
+
+<input type="text" id="userInput" placeholder="اكتب سؤالك هنا...">
+<button id="askBtn">اسأل</button>
+
+<script>
+
+// =======================
+// البيانات
+// =======================
+
+const services = [
+  {group:"ابتدائي ولاد",answer:"الجمعة الساعة 12",keywords:["ابتدائي","ولاد"]},
+  {group:"ابتدائي بنات",answer:"الجمعة الساعة 3",keywords:["ابتدائي","بنات"]},
+  {group:"ملايكه",answer:"الجمعة الساعة 3",keywords:["ملايكه"]},
+  {group:"اعدادي بنات",answer:"الجمعة الساعة 12",keywords:["اعدادي","بنات"]},
+  {group:"ثانوي بنات",answer:"الجمعة الساعة 1:30",keywords:["ثانوي","بنات"]},
+  {group:"اعدادي ولاد",answer:"الخميس الساعة 6",keywords:["اعدادي","ولاد"]},
+  {group:"ثانوي ولاد",answer:"الخميس الساعة 7",keywords:["ثانوي","ولاد"]},
+  {group:"شباب وشابات",answer:"الخميس الساعة 7",keywords:["شباب","شابات"]},
+  {group:"اجتماع الرجال",answer:"الاحد الساعة 6",keywords:["رجال"]},
+  {group:"دراسة الكتاب المقدس",answer:"الاحد الساعة 6",keywords:["دراسة","كتاب","مقدس"]},
+  {group:"إعداد خدام",answer:"السبت الساعة 6",keywords:["اعداد","خدام"]},
+  {group:"هوس ايروف",answer:"الجمعه الساعة 6",keywords:["هوس","ايروف"]},
+  {group:"مدرسة الشمامسة",answer:"الجمعة الساعة 6",keywords:["مدرسة","شمامسة"]},
+  {group:"اجتماع الاسره",answer:"السبت الساعة 6",keywords:["اجتماع","الاسره"]},
+  {group:"اجتماع الشمامسه",answer:"اول احد من كل شهر الساعة 6",keywords:["اجتماع","الشمامسه"]},
+  {group:"ذوي احتياجات",answer:"الاثنين الساعة 5",keywords:["ذوي","احتياجات"]},
+  {group:"سيدات",answer:"الثلاثاء الساعة 6",keywords:["السيدات"]}
+];
+
+const masses = [
+  {group:"قداس السبت",answer:"8:00 صباحاً"},
+  {group:"قداس الأحد",answer:"6:00 و 8:00 صباحاً"},
+  {group:"قداس الاثنين",answer:"11:30 صباحاً"},
+  {group:"قداس الثلاثاء",answer:"11:30 صباحاً"},
+  {group:"قداس الأربعاء",answer:"9:30 و 12:00"},
+  {group:"قداس الخميس",answer:"11:30 صباحاً"},
+  {group:"قداس الجمعة",answer:"7:30 و 9:30 صباحاً"}
+];
+
+// =======================
+// وظائف مساعدة
+// =======================
+
+function addMsg(msg,type){
+  const chat = document.getElementById("chat");
+  const div = document.createElement("div");
+  div.className = type==="user"?"user-msg":"bot-msg";
+  div.innerText = msg;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function normalize(text){
+  return text.toLowerCase().replace(/ة/g,"ه").replace(/أ|إ|آ/g,"ا");
+}
+
+// =======================
+// إرسال السؤال
+// =======================
+
+function sendMessage(){
+  const inputField = document.getElementById("userInput");
+  const input = inputField.value.trim();
+  if(!input) return;
+
+  addMsg(input,"user");
+  inputField.value="";
+
+  let question = normalize(input);
+
+  // ===== جميع الخدمات =====
+  if(question.includes("مواعيد جميع الخدمات") || question.includes("مواعيد كل الخدمات")|| question.includes("مواعيد الخدمات")){
+      let response = "📌 مواعيد جميع الخدمات:\n\n";
+      services.forEach(s=>{
+        response += "- " + s.group + " : " + s.answer + "\n";
+      });
+      addMsg(response,"bot");
+      return;
+  }
+
+  // ===== جميع القداسات =====
+  if(question.includes("مواعيد جميع القداسات") || question.includes("مواعيد كل القداسات")|| question.includes("مواعيد القداسات")){
+      let response = "📌 مواعيد جميع القداسات:\n\n";
+      masses.forEach(m=>{
+        response += "- " + m.group + " : " + m.answer + "\n";
+      });
+      addMsg(response,"bot");
+      return;
+  }
+
+  // ===== البحث العادي =====
+  for(let i=0;i<services.length;i++){
+    let item = services[i];
+    if(item.keywords.some(k=>question.includes(k))){
+      addMsg(item.answer,"bot");
+      return;
+    }
+  }
+
+  addMsg("غير متوفر حاليا","bot");
+}
+
+document.getElementById("askBtn").addEventListener("click", sendMessage);
+document.getElementById("userInput").addEventListener("keydown", function(e){
+  if(e.key==="Enter"){
+    sendMessage();
+  }
+});
+
+</script>
+</div>
+</body>
+</html>
