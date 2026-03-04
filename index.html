@@ -3,174 +3,393 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>كنيسه العذراء و القديس بولس الرسول _ الحضره الجديده</title>
+<title>كنيسة العذراء والقديس بولس الرسول - الحضرية الجديدة</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-body{
+*{
   margin:0;
-  font-family:'Segoe UI',sans-serif;
-  background:#F5F5Dc;
-  color:white;
+  padding:0;
+  box-sizing:border-box;
+}
+body{
+  font-family:'Segoe UI','Tahoma','Arial',sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height:100vh;
   display:flex;
   justify-content:center;
   padding:20px;
 }
 .container{
-  max-width:900px;
+  max-width:1000px;
   width:100%;
-  background:#8B4513;
+  background:#fff;
+  border-radius:25px;
+  overflow:hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.header{
+  background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+  padding:30px;
+  text-align:center;
+  color:white;
+}
+.header img{
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  border:4px solid #FFD700;
+  object-fit:cover;
+  margin-bottom:15px;
+}
+.header h1{
+  font-size:1.8rem;
+  margin-bottom:5px;
+  text-shadow:2px 2px 4px rgba(0,0,0,0.3);
+}
+.header p{
+  opacity:0.9;
+  font-size:0.95rem;
+}
+.content{
   padding:25px;
-  border-radius:20px;
 }
-h1{text-align:center;color:#ffffff;}
-#chat{
-  max-height:450px;
-  overflow-y:auto;
-  border:1px solid #000000;
-  padding:10px;
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:1.3rem;
+  color:#8B4513;
+  margin:25px 0 15px 0;
+  padding-bottom:10px;
+  border-bottom:2px solid #8B4513;
+}
+.section-title:first-child{
+  margin-top:0;
+}
+.section-title i{
+  color:#8B4513;
+}
+.btn-group{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:12px;
+}
+.service-btn{
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+  border:2px solid #e0e0e0;
   border-radius:15px;
-  margin-bottom:10px;
-  white-space:pre-line;
-}
-.user-msg{color:#000000;margin:5px 0;}
-.bot-msg{color:#000000;margin:5px 0;}
-input{
-  width:75%;
-  padding:10px;
-  font-size:1rem;
-  border-radius:10px;
-  border:none;
-}
-button{
-  padding:10px;
-  font-size:1rem;
-  border-radius:10px;
-  border:none;
-  background:#ffffff;
-  color:#000;
+  padding:18px 15px;
   cursor:pointer;
-  margin-left:5px;
+  transition:all 0.3s ease;
+  text-align:right;
+}
+.service-btn:hover{
+  background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+  color:white;
+  border-color:#8B4513;
+  transform:translateY(-3px);
+  box-shadow:0 8px 20px rgba(139,69,19,0.3);
+}
+.service-btn i{
+  display:block;
+  font-size:1.5rem;
+  margin-bottom:8px;
+  color:#8B4513;
+}
+.service-btn:hover i{
+  color:white;
+}
+.service-btn .service-name{
+  font-weight:600;
+  font-size:0.95rem;
+  margin-bottom:4px;
+}
+.service-btn .service-time{
+  font-size:0.85rem;
+  opacity:0.7;
+}
+.mass-btn{
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  border:2px solid #a5d6a7;
+  border-radius:15px;
+  padding:18px 15px;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  text-align:right;
+}
+.mass-btn:hover{
+  background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%);
+  color:white;
+  border-color:#2e7d32;
+  transform:translateY(-3px);
+  box-shadow:0 8px 20px rgba(46,125,50,0.3);
+}
+.mass-btn i{
+  display:block;
+  font-size:1.5rem;
+  margin-bottom:8px;
+  color:#2e7d32;
+}
+.mass-btn:hover i{
+  color:white;
+}
+.mass-btn .mass-name{
+  font-weight:600;
+  font-size:0.95rem;
+  margin-bottom:4px;
+}
+.mass-btn .mass-time{
+  font-size:0.85rem;
+  opacity:0.7;
+}
+.show-all-btn{
+  display:block;
+  width:100%;
+  padding:15px;
+  margin-top:20px;
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  border:none;
+  border-radius:15px;
+  color:#000;
+  font-size:1rem;
+  font-weight:bold;
+  cursor:pointer;
+  transition:all 0.3s ease;
+}
+.show-all-btn:hover{
+  transform:scale(1.02);
+  box-shadow:0 8px 25px rgba(255,165,0,0.4);
+}
+.result-modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.7);
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
+  animation:fadeIn 0.3s ease;
+}
+@keyframes fadeIn{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+.modal-content{
+  background:white;
+  border-radius:20px;
+  padding:30px;
+  max-width:400px;
+  width:90%;
+  text-align:center;
+  animation:slideUp 0.3s ease;
+}
+@keyframes slideUp{
+  from{transform:translateY(50px);opacity:0;}
+  to{transform:translateY(0);opacity:1;}
+}
+.modal-close{
+  position:absolute;
+  top:15px;
+  right:20px;
+  font-size:2rem;
+  cursor:pointer;
+  color:#666;
+}
+.modal-icon{
+  font-size:4rem;
+  margin-bottom:15px;
+}
+.service-modal .modal-icon{
+  color:#8B4513;
+}
+.mass-modal .modal-icon{
+  color:#2e7d32;
+}
+.modal-title{
+  font-size:1.4rem;
+  color:#333;
+  margin-bottom:10px;
+}
+.modal-time{
+  font-size:1.8rem;
+  font-weight:bold;
+  color:#8B4513;
+  margin-bottom:20px;
+}
+.modal-close-btn{
+  padding:12px 30px;
+  background:#8B4513;
+  color:white;
+  border:none;
+  border-radius:25px;
+  font-size:1rem;
+  cursor:pointer;
+  transition:all 0.3s ease;
+}
+.modal-close-btn:hover{
+  background:#A0522D;
+}
+.footer{
+  background:#f5f5f5;
+  padding:20px;
+  text-align:center;
+  color:#666;
+  font-size:0.9rem;
+}
+@media (max-width:600px){
+  .container{border-radius:0;}
+  .header{padding:20px;}
+  .header h1{font-size:1.4rem;}
+  .content{padding:15px;}
+  .btn-group{grid-template-columns:repeat(2,1fr);gap:8px;}
+  .service-btn,.mass-btn{padding:12px 10px;}
+  .service-btn .service-name,.mass-btn .mass-name{font-size:0.8rem;}
+  .service-btn .service-time,.mass-btn .mass-time{font-size:0.7rem;}
 }
 </style>
 </head>
 <body>
 <div class="container">
-
-<div style="text-align:center;margin-bottom:15px;">
-<img src="logo.jpg" alt="شعار الكنيسة" style="max-width:120px; border-radius:15px;">
+<div class="header">
+<img src="logo.jpg" alt="شعار الكنيسة">
+<h1>⛪ كنيسة العذراء والقديس بولس الرسول</h1>
+<p>الحضرية الجديدة - خدمة_reordered_with_love</p>
 </div>
 
-<h1>⛪ كنيسه العذراء و القديس بولس الرسول _ الحضره الجديده</h1>
+<div class="content">
 
-<div id="chat"></div>
+<!-- الخدمات -->
+<div class="section-title">
+<i class="fas fa-users"></i>
+<h2>الخدمات</h2>
+</div>
+<div class="btn-group" id="servicesContainer"></div>
 
-<input type="text" id="userInput" placeholder="اكتب سؤالك هنا...">
-<button id="askBtn">اسأل</button>
+<!-- القداسات -->
+<div class="section-title">
+<i class="fas fa-church"></i>
+<h2>القداسات</h2>
+</div>
+<div class="btn-group" id="massesContainer"></div>
+
+</div>
+
+<div class="footer">
+جميع الحقوق محفوظة © 2024
+</div>
+</div>
+
+<!-- نافذة النتيجة -->
+<div class="result-modal" id="resultModal">
+<div class="modal-content">
+  <div class="modal-icon" id="modalIcon"></div>
+  <div class="modal-title" id="modalTitle"></div>
+  <div class="modal-time" id="modalTime"></div>
+  <button class="modal-close-btn" onclick="closeModal()">إغلاق</button>
+</div>
+</div>
 
 <script>
-
 // =======================
 // البيانات
 // =======================
-
 const services = [
-  {group:"ابتدائي ولاد",answer:"الجمعة الساعة 12",keywords:["ابتدائي","ولاد"]},
-  {group:"ابتدائي بنات",answer:"الجمعة الساعة 3",keywords:["ابتدائي","بنات"]},
-  {group:"ملايكه",answer:"الجمعة الساعة 3",keywords:["ملايكه"]},
-  {group:"اعدادي بنات",answer:"الجمعة الساعة 12",keywords:["اعدادي","بنات"]},
-  {group:"ثانوي بنات",answer:"الجمعة الساعة 1:30",keywords:["ثانوي","بنات"]},
-  {group:"اعدادي ولاد",answer:"الخميس الساعة 6",keywords:["اعدادي","ولاد"]},
-  {group:"ثانوي ولاد",answer:"الخميس الساعة 7",keywords:["ثانوي","ولاد"]},
-  {group:"شباب وشابات",answer:"الخميس الساعة 7",keywords:["شباب","شابات"]},
-  {group:"اجتماع الرجال",answer:"الاحد الساعة 6",keywords:["رجال"]},
-  {group:"دراسة الكتاب المقدس",answer:"الاحد الساعة 6",keywords:["دراسة","كتاب","مقدس"]},
-  {group:"إعداد خدام",answer:"السبت الساعة 6",keywords:["اعداد","خدام"]},
-  {group:"هوس ايروف",answer:"الجمعه الساعة 6",keywords:["هوس","ايروف"]},
-  {group:"مدرسة الشمامسة",answer:"الجمعة الساعة 6",keywords:["مدرسة","شمامسة"]},
-  {group:"اجتماع الاسره",answer:"السبت الساعة 6",keywords:["اجتماع","الاسره"]},
-  {group:"اجتماع الشمامسه",answer:"اول احد من كل شهر الساعة 6",keywords:["اجتماع","الشمامسه"]},
-  {group:"ذوي احتياجات",answer:"الاثنين الساعة 5",keywords:["ذوي","احتياجات"]},
-  {group:"سيدات",answer:"الثلاثاء الساعة 6",keywords:["السيدات"]}
+  {name:"ابتدائي ولاد",time:"الجمعة الساعة 12",icon:"fa-school"},
+  {name:"ابتدائي بنات",time:"الجمعة الساعة 3",icon:"fa-school"},
+  {name:"ملايكه",time:"الجمعة الساعة 3",icon:"fa-angel"},
+  {name:"اعدادي بنات",time:"الجمعة الساعة 12",icon:"fa-graduation-cap"},
+  {name:"ثانوي بنات",time:"الجمعة الساعة 1:30",icon:"fa-graduation-cap"},
+  {name:"اعدادي ولاد",time:"الخميس الساعة 6",icon:"fa-graduation-cap"},
+  {name:"ثانوي ولاد",time:"الخميس الساعة 7",icon:"fa-graduation-cap"},
+  {name:"شباب وشابات",time:"الخميس الساعة 7",icon:"fa-users"},
+  {name:"اجتماع الرجال",time:"الأحد الساعة 6",icon:"fa-male"},
+  {name:"دراسة الكتاب المقدس",time:"الأحد الساعة 6",icon:"fa-bible"},
+  {name:"إعداد خدام",time:"السبت الساعة 6",icon:"fa-hands-helping"},
+  {name:"هوس إيروف",time:"الجمعة الساعة 6",icon:"fa-music"},
+  {name:"مدرسة الشمامسة",time:"الجمعة الساعة 6",icon:"fa-music"},
+  {name:"اجتماع الأسرة",time:"السبت الساعة 6",icon:"fa-users"},
+  {name:"اجتماع الشمامسة",time:"أول أحد من كل شهر الساعة 6",icon:"fa-music"},
+  {name:"ذوي احتياجات",time:"الاثنين الساعة 5",icon:"fa-heart"},
+  {name:"سيدات",time:"الثلاثاء الساعة 6",icon:"fa-female"}
 ];
 
 const masses = [
-  {group:"قداس السبت",answer:"8:00 صباحاً"},
-  {group:"قداس الأحد",answer:"6:00 و 8:00 صباحاً"},
-  {group:"قداس الاثنين",answer:"11:30 صباحاً"},
-  {group:"قداس الثلاثاء",answer:"11:30 صباحاً"},
-  {group:"قداس الأربعاء",answer:"9:30 و 12:00"},
-  {group:"قداس الخميس",answer:"11:30 صباحاً"},
-  {group:"قداس الجمعة",answer:"7:30 و 9:30 صباحاً"}
+  {name:"قداس يوم السبت",time:"8:00 صباحاً",icon:"fa-church"},
+  {name:"قداس يوم الأحد",time:"6:00 و 8:00 صباحاً",icon:"fa-church"},
+  {name:"قداس يوم الاثنين",time:"11:30 صباحاً",icon:"fa-church"},
+  {name:"قداس يوم الثلاثاء",time:"11:30 صباحاً",icon:"fa-church"},
+  {name:"قداس يوم الأربعاء",time:"9:30 و 12:00 ظهراً",icon:"fa-church"},
+  {name:"قداس يوم الخميس",time:"11:30 صباحاً",icon:"fa-church"},
+  {name:"قداس يوم الجمعة",time:"7:30 و 9:30 صباحاً",icon:"fa-church"}
 ];
 
 // =======================
-// وظائف مساعدة
+// عرض الأزرار
 // =======================
-
-function addMsg(msg,type){
-  const chat = document.getElementById("chat");
-  const div = document.createElement("div");
-  div.className = type==="user"?"user-msg":"bot-msg";
-  div.innerText = msg;
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
+function renderServices(){
+  const container = document.getElementById('servicesContainer');
+  container.innerHTML = services.map((s,index) => `
+    <div class="service-btn" onclick="showService(${index})">
+      <i class="fas ${s.icon}"></i>
+      <div class="service-name">${s.name}</div>
+      <div class="service-time">${s.time}</div>
+    </div>
+  `).join('');
 }
 
-function normalize(text){
-  return text.toLowerCase().replace(/ة/g,"ه").replace(/أ|إ|آ/g,"ا");
+function renderMasses(){
+  const container = document.getElementById('massesContainer');
+  container.innerHTML = masses.map((m,index) => `
+    <div class="mass-btn" onclick="showMass(${index})">
+      <i class="fas ${m.icon}"></i>
+      <div class="mass-name">${m.name}</div>
+      <div class="mass-time">${m.time}</div>
+    </div>
+  `).join('');
 }
 
 // =======================
-// إرسال السؤال
+// عرض التفاصيل
 // =======================
-
-function sendMessage(){
-  const inputField = document.getElementById("userInput");
-  const input = inputField.value.trim();
-  if(!input) return;
-
-  addMsg(input,"user");
-  inputField.value="";
-
-  let question = normalize(input);
-
-  // ===== جميع الخدمات =====
-  if(question.includes("مواعيد جميع الخدمات") || question.includes("مواعيد كل الخدمات")|| question.includes("مواعيد الخدمات")){
-      let response = "📌 مواعيد جميع الخدمات:\n\n";
-      services.forEach(s=>{
-        response += "- " + s.group + " : " + s.answer + "\n";
-      });
-      addMsg(response,"bot");
-      return;
-  }
-
-  // ===== جميع القداسات =====
-  if(question.includes("مواعيد جميع القداسات") || question.includes("مواعيد كل القداسات")|| question.includes("مواعيد القداسات")){
-      let response = "📌 مواعيد جميع القداسات:\n\n";
-      masses.forEach(m=>{
-        response += "- " + m.group + " : " + m.answer + "\n";
-      });
-      addMsg(response,"bot");
-      return;
-  }
-
-  // ===== البحث العادي =====
-  for(let i=0;i<services.length;i++){
-    let item = services[i];
-    if(item.keywords.some(k=>question.includes(k))){
-      addMsg(item.answer,"bot");
-      return;
-    }
-  }
-
-  addMsg("غير متوفر حاليا","bot");
+function showService(index){
+  const service = services[index];
+  const modal = document.getElementById('resultModal');
+  modal.className = 'result-modal service-modal';
+  document.getElementById('modalIcon').innerHTML = `<i class="fas ${service.icon}"></i>`;
+  document.getElementById('modalTitle').textContent = service.name;
+  document.getElementById('modalTime').textContent = service.time;
+  modal.style.display = 'flex';
 }
 
-document.getElementById("askBtn").addEventListener("click", sendMessage);
-document.getElementById("userInput").addEventListener("keydown", function(e){
-  if(e.key==="Enter"){
-    sendMessage();
+function showMass(index){
+  const mass = masses[index];
+  const modal = document.getElementById('resultModal');
+  modal.className = 'result-modal mass-modal';
+  document.getElementById('modalIcon').innerHTML = `<i class="fas ${mass.icon}"></i>`;
+  document.getElementById('modalTitle').textContent = mass.name;
+  document.getElementById('modalTime').textContent = mass.time;
+  modal.style.display = 'flex';
+}
+
+function closeModal(){
+  document.getElementById('resultModal').style.display = 'none';
+}
+
+// إغلاق النافذة عند الضغط خارجها
+document.getElementById('resultModal').addEventListener('click',function(e){
+  if(e.target === this){
+    closeModal();
   }
 });
+
+// =======================
+// التشغيل
+// =======================
+renderServices();
+renderMasses();
 
 </script>
 </div>
